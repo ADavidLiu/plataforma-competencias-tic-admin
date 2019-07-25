@@ -77,11 +77,15 @@ class LoginCheck extends Component {
                                 <Avatar alt="Imagen de perfil" src={this.state.datosPerfil.imgSrc !== "" ? this.state.datosPerfil.imgSrc : "https://via.placeholder.com/200"} className="mr-3" />
                                 <Typography variant="h6" color="inherit">{this.state.datosPerfil.nombre}</Typography>
                                 <div className="d-flex align-items-center justify-content-end flex-grow-1">
-                                    <Link to="/" className="mr-4">
-                                        <IconButton style={{ color: "#ffffff" }} edge="start">
-                                            <Home />
-                                        </IconButton>
-                                    </Link>
+                                    {
+                                        this.state.tipoUsuario !== "OPERARIO" ? (
+                                            <Link to="/" className="mr-4">
+                                                <IconButton style={{ color: "#ffffff" }} edge="start">
+                                                    <Home />
+                                                </IconButton>
+                                            </Link>
+                                        ) : ""
+                                    }
                                     <Link to="/">
                                         <IconButton style={{ color: "#ffffff" }} edge="start" onClick={this.logout}>
                                             <ExitToApp />
