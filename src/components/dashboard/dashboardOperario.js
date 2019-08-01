@@ -318,7 +318,7 @@ class DashboardOperario extends Component {
                                                             }
                                                             {
                                                                 this.state.solicitudes[tipoSolicitud].length === 0 ? (
-                                                                    <Typography variant="body1">No hay solicitudes activas</Typography>
+                                                                    <Typography variant="body1"><CheckCircle color="primary" /> No hay solicitudes activas</Typography>
                                                                 ) : (
                                                                     <div>
                                                                     {
@@ -357,10 +357,10 @@ class DashboardOperario extends Component {
                                                                                                     <Info color="primary" className="mr-2" />
                                                                                                     <div className="flex-grow-1">
                                                                                                         <Typography variant="body1" className="mb-2"><strong>{this.state.evaluadoresSeleccionados[tipoSolicitud][i].nombre}</strong> tiene actualmente asignada la siguiente cantidad de revisiones:</Typography>
-                                                                                                        <div className="d-flex align-items-start justify-content-between">
-                                                                                                            <Typography variant="body2"><strong>Prácticas educativas:</strong> {this.state.evaluadoresSeleccionados[tipoSolicitud][i].asignaciones.practicas}</Typography>
-                                                                                                            <Typography variant="body2"><strong>Pre-entrevistas:</strong> {this.state.evaluadoresSeleccionados[tipoSolicitud][i].asignaciones.preentrevistas}</Typography>
-                                                                                                            <Typography variant="body2"><strong>Entrevistas:</strong> {this.state.evaluadoresSeleccionados[tipoSolicitud][i].asignaciones.entrevistas}</Typography>
+                                                                                                        <div className="d-flex align-items-start justify-content-between text-center">
+                                                                                                            <Typography variant="subtitle2"><Typography component="span" variant="body1">{this.state.evaluadoresSeleccionados[tipoSolicitud][i].asignaciones.practicas}</Typography><br/>Prácticas</Typography>
+                                                                                                            <Typography variant="subtitle2"><Typography component="span" variant="body1">{this.state.evaluadoresSeleccionados[tipoSolicitud][i].asignaciones.preentrevistas}</Typography><br/>Pre-entrevistas</Typography>
+                                                                                                            <Typography variant="subtitle2"><Typography component="span" variant="body1">{this.state.evaluadoresSeleccionados[tipoSolicitud][i].asignaciones.entrevistas}</Typography><br/>Entrevistas</Typography>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>

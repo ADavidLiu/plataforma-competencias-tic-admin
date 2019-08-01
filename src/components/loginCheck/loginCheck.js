@@ -15,7 +15,14 @@ import ExitToApp from '@material-ui/icons/ExitToApp';
 
 import Login from "../login/login";
 import Dashboard from "../dashboard/dashboard";
+import DashboardDocente from "../dashboard/dashboardDocente";
+import DashboardEstablecimientoEducativo from "../dashboard/dashboardEstablecimientoEducativo";
+import DashboardGobierno from "../dashboard/dashboardGobierno";
 import Pagina404 from "../pagina404/pagina404";
+import Prueba from "../prueba/prueba";
+import Practicas from "../practicas/practicas";
+import Preentrevista from "../preentrevista/preentrevista";
+import Entrevista from "../entrevista/entrevista";
 
 class LoginCheck extends Component {
     constructor() {
@@ -34,9 +41,9 @@ class LoginCheck extends Component {
         /* Sino, conectarse al backend para obtener los datos personales del evaluador */
         this.setState({
             id: "usuario-1",
-            tipoUsuario: "OPERARIO",
+            tipoUsuario: "VISUALIZADOR",
             datosPerfil: {
-                nombre: "Usuario operario",
+                nombre: "Usuario visualizador",
                 imgSrc: ""
             }
         });
@@ -45,13 +52,13 @@ class LoginCheck extends Component {
     revisarInformacion = data => {
         /* Conectarse al backend para chequear si se logeó bien */
 
-        /* if true */
+        /* if true. Con los datos correctos */
         this.setState({
             isLogeado: true,
             id: "usuario-1",
-            tipoUsuario: "OPERARIO",
+            tipoUsuario: "VISUALIZADOR",
             datosPerfil: {
-                nombre: "Usuario operario",
+                nombre: "Usuario visualizador",
                 imgSrc: ""
             }
         });
@@ -117,6 +124,13 @@ class LoginCheck extends Component {
                                     <Switch>
                                         <Route path="/login/" render={(...routeProps) => <Login {...routeProps} isLogeado={this.state.isLogeado} revisarInformacion={this.revisarInformacion} />} />
                                         <Route path="/dashboard/" render={(...routeProps) => <Dashboard {...routeProps} tipoUsuario={this.state.tipoUsuario} userID={this.state.id} />} />
+                                        <Route path="/dashboard-docente/" render={(...routeProps) => <DashboardDocente {...routeProps} tipoUsuario={this.state.tipoUsuario} userID={this.state.id} />} />
+                                        <Route path="/dashboard-ee/" render={(...routeProps) => <DashboardEstablecimientoEducativo {...routeProps} tipoUsuario={this.state.tipoUsuario} userID={this.state.id} />} />
+                                        <Route path="/dashboard-gobierno/" render={(...routeProps) => <DashboardGobierno {...routeProps} tipoUsuario={this.state.tipoUsuario} userID={this.state.id} />} />
+                                        <Route path="/prueba/" component={Prueba}></Route>
+                                        <Route path="/practicas/" component={Practicas}></Route>
+                                        <Route path="/preentrevista/" component={Preentrevista}></Route>
+                                        <Route path="/entrevista/" component={Entrevista}></Route>
                                         <Route component={Pagina404} />
                                     </Switch>
                                 ) : ""
