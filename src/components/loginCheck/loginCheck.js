@@ -41,9 +41,9 @@ class LoginCheck extends Component {
         /* Sino, conectarse al backend para obtener los datos personales del evaluador */
         this.setState({
             id: "usuario-1",
-            tipoUsuario: "VISUALIZADOR",
+            tipoUsuario: "OPERARIO",
             datosPerfil: {
-                nombre: "Usuario visualizador",
+                nombre: "Usuario operario",
                 imgSrc: ""
             }
         });
@@ -56,9 +56,9 @@ class LoginCheck extends Component {
         this.setState({
             isLogeado: true,
             id: "usuario-1",
-            tipoUsuario: "VISUALIZADOR",
+            tipoUsuario: "OPERARIO",
             datosPerfil: {
-                nombre: "Usuario visualizador",
+                nombre: "Usuario operario",
                 imgSrc: ""
             }
         });

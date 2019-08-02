@@ -164,18 +164,23 @@ class DashboardOperario extends Component {
             const binario = e.target.result;
             const wb = XLSX.read(binario, {type:"binary"});
             
-            /* PRIMERA hoja del archivo */
-            const hojaIE = wb.SheetNames[0];
+            /* PRIMERA hoja del archivo -> Subdivisiones */
+            const hojaSubs = wb.SheetNames[0];
+            const datosSubs = wb.Sheets[hojaSubs];
+            const dataSubs = XLSX.utils.sheet_to_json(datosSubs, {header:1, blankrows: false});
+
+            /* SEGUNDA hoja del archivo -> Institución educativa */
+            const hojaIE = wb.SheetNames[1];
             const datosIE = wb.Sheets[hojaIE];
             const dataIE = XLSX.utils.sheet_to_json(datosIE, {header:1, blankrows: false});
 
-            /* SEGUNDA hoja del archivo */
-            const hojaSedes = wb.SheetNames[1];
+            /* TERCERA hoja del archivo -> Sedes */
+            const hojaSedes = wb.SheetNames[2];
             const datosSedes = wb.Sheets[hojaSedes];
             const dataSedes = XLSX.utils.sheet_to_json(datosSedes, {header:1, blankrows: false});
 
-            /* TERCERA hoja del archivo */
-            const hojaDocentes = wb.SheetNames[2];
+            /* CUARTA hoja del archivo -> Docentes */
+            const hojaDocentes = wb.SheetNames[3];
             const datosDocentes = wb.Sheets[hojaDocentes];
             const dataDocentes = XLSX.utils.sheet_to_json(datosDocentes, {header:1, blankrows: false});
 
@@ -184,6 +189,7 @@ class DashboardOperario extends Component {
                 binaryString: fileReader.result,
                 nombre: file.name,
                 data: {
+                    subs: dataSubs,
                     ie: dataIE,
                     sedes: dataSedes,
                     docentes: dataDocentes
