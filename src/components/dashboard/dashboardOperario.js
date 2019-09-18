@@ -35,10 +35,11 @@ class DashboardOperario extends Component {
         super();
 
         this.state = {
-            tabIndex: 0,
+            tabIndex: 1,
             didSolicitudesLoad: false,
             isUploading: false,
             basesDeDatos: [],
+            authSedesGeneradas: [],
             solicitudes: {
                 practicas: [],
                 preentrevistas: [],
@@ -196,9 +197,25 @@ class DashboardOperario extends Component {
                 }
             });
 
+            /* Crear el espacio en el arreglo del estado para la nueva sede */
+            const newAuthSedesGeneradas = [...this.state.authSedesGeneradas];
+            
+            /* Crea el espacio inial de la base de datos */
+            newAuthSedesGeneradas.push([]);
+
+            /* Crea tantos espacios internos como sedes tenga la base de datos */
+            const numSedes = dataSedes.length - 1;
+            for (let i = 0; i < numSedes; i++) {
+                newAuthSedesGeneradas[newAuthSedesGeneradas.length - 1].push({
+                    usuario: "",
+                    contrasenia: ""
+                });
+            }
+
             this.setState({
                 isUploading: false,
-                basesDeDatos: newBasesDeDatos
+                basesDeDatos: newBasesDeDatos,
+                authSedesGeneradas: newAuthSedesGeneradas
             });
         };
 
@@ -275,6 +292,22 @@ class DashboardOperario extends Component {
             }
         });
     }
+    
+    generarContraseniaSede = (i, j) => {
+        const newAuthSedesGeneradas = [...this.state.authSedesGeneradas];
+
+        const contrasenia = generator.generate({
+            length: 10,
+            numbers: true
+        });
+        console.log(i, j);
+        console.log(newAuthSedesGeneradas[i][j]);
+        newAuthSedesGeneradas[i].contrasenia = contrasenia;
+
+        this.setState({
+            authSedesGeneradas: newAuthSedesGeneradas
+        });
+    }
 
     handleFormChange = e => {
         this.setState({
@@ -283,6 +316,10 @@ class DashboardOperario extends Component {
                 [e.target.name]: e.target.value
             }
         });
+    }
+
+    handleAuthSedeChange = e => {
+
     }
     
     render() {
@@ -430,10 +467,56 @@ class DashboardOperario extends Component {
                                                     this.state.basesDeDatos.map((archivo, i) => {
                                                         return (
                                                             <React.Fragment key={i}>
-                                                                <div className="d-flex align-items-center justify-content-between">
+                                                                <div className="d-flex align-items-center justify-content-between mb-3">
                                                                     <Typography variant="body2"><em>{archivo.nombre}</em></Typography>
                                                                     <Delete style={{cursor:"pointer"}} onClick={() => { this.eliminarArchivo(i); }} />
                                                                 </div>
+                                                                <div>
+                                                                    <Typography variant="body2">La información de la Institución Educativa cargada registra <strong>{archivo.data.sedes.length - 1} {archivo.data.sedes.length - 1 > 1 ? "sedes" : "sede"}</strong>. Por favor asigne un usuario y contraseña{archivo.data.sedes.length - 1 > 1 ? " para cada una" : ""}:</Typography>
+                                                                </div>
+                                                                <Grid container spacing={5} className="mt-3">
+                                                                    {
+                                                                        archivo.data.sedes.map((sede, j) => {
+                                                                            if (j !== 0) {
+                                                                                return (
+                                                                                    <Grid key={j} item xs={12} md={4}>
+                                                                                        <Typography variant="body1" className="mb-1"><strong>{sede[0]}</strong></Typography>
+                                                                                        <form onSubmit={this.crearEvaluador}>
+                                                                                            <TextField
+                                                                                                variant="outlined"
+                                                                                                margin="normal"
+                                                                                                required
+                                                                                                fullWidth
+                                                                                                id="usuario"
+                                                                                                label="Usuario"
+                                                                                                name="usuario"
+                                                                                                value={this.state.authSedesGeneradas[i].usuario}
+                                                                                                onChange={() => { this.handleAuthSedeChange(i, j) }}
+                                                                                            />
+                                                                                            <div className="d-flex align-items-stretch justify-content-between mt-3 mb-2">
+                                                                                                <TextField
+                                                                                                    variant="outlined"
+                                                                                                    margin="normal"
+                                                                                                    required
+                                                                                                    fullWidth
+                                                                                                    disabled
+                                                                                                    id="contrasenia"
+                                                                                                    label="Contraseña"
+                                                                                                    name="contrasenia"
+                                                                                                    type="text"
+                                                                                                    value={this.state.authSedesGeneradas[i].contrasenia}
+                                                                                                    onChange={() => { this.handleAuthSedeChange(i, j) }}
+                                                                                                    className="my-0"
+                                                                                                />
+                                                                                                <Button variant="outlined" color="primary" className="ml-4 px-4" onClick={() => { this.generarContraseniaSede(i, j); } }>Generar</Button>
+                                                                                            </div>
+                                                                                        </form>
+                                                                                    </Grid>
+                                                                                )   
+                                                                            }
+                                                                        })
+                                                                    }
+                                                                </Grid>
                                                                 <hr/>
                                                             </React.Fragment>
                                                         );
